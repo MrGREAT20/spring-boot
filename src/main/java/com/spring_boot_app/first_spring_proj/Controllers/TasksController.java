@@ -8,7 +8,8 @@ import com.spring_boot_app.first_spring_proj.data.Task;
 import java.util.ArrayList;
 import java.util.Date;
 
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -100,9 +101,9 @@ public class TasksController {
      */
 
     @PostMapping("")
-    public ArrayList<Task> postMethodName(@RequestBody Task task) {
+    public ResponseEntity<ArrayList<Task>>postMethodName(@RequestBody Task task) {
         this.tasks.add(task);
-        return tasks;
+        return new ResponseEntity<>(tasks, HttpStatus.CREATED);
     }
     
     
