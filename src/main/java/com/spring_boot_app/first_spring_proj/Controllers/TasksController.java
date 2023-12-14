@@ -10,7 +10,9 @@ import java.util.Date;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -101,8 +103,29 @@ public class TasksController {
      */
 
     @PostMapping("")
-    public ResponseEntity<ArrayList<Task>>postMethodName(@RequestBody Task task) {
+    public ResponseEntity<ArrayList<Task>>createTask(@RequestBody Task task) {
         this.tasks.add(task);
+        return new ResponseEntity<>(tasks, HttpStatus.CREATED);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity <ArrayList<Task>> deleteTask(@PathVariable("id") Integer id){
+        if(this.tasks.size() > 0){
+            this.tasks.remove((int)id); // this.tasks.remove(id) was not working, so we 
+        }
+        return new ResponseEntity<>(tasks, HttpStatus.CREATED);
+    }
+
+    
+    @PatchMapping("/{id}")
+    public ResponseEntity<ArrayList<Task>> updateTask(@PathVariable("id") Integer id, @RequestBody Task ntask){
+        if(this.tasks.size() > (int)id){
+            this.tasks.set((int) id, ntask);
+        }
+        else{
+            return new ResponseEntity<>(tasks, HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(tasks, HttpStatus.CREATED);
     }
     
